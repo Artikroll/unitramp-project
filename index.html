@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UNITRAMP Проект · планировка, 3D и смета парка</title>
+<meta name="description" content="Проектная документация развлекательного парка под ваше помещение: зонирование, пожарные требования, 3D, смета и сроки. Первые четыре уровня проработки бесплатно.">
+<style>
+@font-face{font-family:'Inter Tight';src:url(assets/fonts/InterTight.ttf) format('truetype');font-weight:100 900;font-display:swap}
+@font-face{font-family:'JB';src:url(assets/fonts/JetBrainsMono.ttf) format('truetype');font-weight:100 800;font-display:swap}
+:root{--paper:#F7F7F4;--white:#fff;--ink:#0E0E0E;--muted:#6E6E66;--line:#E2E2DC;--line2:#CFCFC7;--org:#FF4F00;--org2:#E04400}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 18px/1.55 'Inter Tight',Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:1360px;margin:0 auto;padding:0 32px}
+.mono{font-family:'JB',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+h1,h2,h3{font-weight:600;letter-spacing:-.03em;line-height:1.02}
+h2{font-size:clamp(34px,4.2vw,62px)}
+h3{font-size:24px;letter-spacing:-.02em;line-height:1.15}
+.lead{font-size:20px;color:var(--muted);max-width:600px;line-height:1.5}
+.lbl{display:flex;align-items:center;gap:10px;color:var(--muted);margin-bottom:22px}
+.lbl b{color:var(--org);font-weight:500}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:16px 24px;background:var(--ink);color:#fff;text-decoration:none;border:0;cursor:pointer;font-family:'JB',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;transition:background .2s}
+.btn:hover{background:var(--org)}
+.btn.o{background:var(--org)}
+.btn.o:hover{background:var(--org2)}
+.btn.g{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.btn.g:hover{background:var(--ink);color:#fff}
+.btn i{font-style:normal}
+.gap{background:#FFF1B8;color:#6B5200;padding:0 5px;font-size:.84em;font-family:'Inter Tight';text-transform:none;letter-spacing:0}
+.gap:before{content:"нужны данные: "}
+.gap.ok{background:#E3F0FF;color:#0B3B7A}
+.gap.ok:before{content:"подтвердить: "}
+body.clean .gap{display:none}
+.grid-bg{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:40px 40px;background-position:-1px -1px}
+section{position:relative;border-top:1px solid var(--line2)}
+.pad{padding:110px 0}
+.head{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:56px}
+.head>*{min-width:0}
+.crop{position:relative}
+.crop:before,.crop:after,.crop>.c1,.crop>.c2{content:"";position:absolute;width:14px;height:14px;border:1.5px solid var(--org);z-index:3;pointer-events:none}
+.crop:before{left:-7px;top:-7px;border-width:1.5px 0 0 1.5px}
+.crop:after{right:-7px;top:-7px;border-width:1.5px 1.5px 0 0}
+.crop>.c1{left:-7px;bottom:-7px;border-width:0 0 1.5px 1.5px}
+.crop>.c2{right:-7px;bottom:-7px;border-width:0 1.5px 1.5px 0}
+/* header */
+.top{position:fixed;inset:0 0 auto;z-index:50;background:rgba(247,247,244,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line2)}
+.top .wrap{display:flex;align-items:center;gap:30px;height:64px}
+.logo{display:flex;align-items:center;gap:14px;text-decoration:none}
+.logo img{height:22px;filter:grayscale(1) brightness(.2)}
+.logo span{color:var(--muted);border-left:1px solid var(--line2);padding-left:14px}
+.nav{display:flex;gap:26px;margin-left:auto}
+.nav a{text-decoration:none;color:var(--muted);transition:color .2s}
+.nav a:hover{color:var(--org)}
+.top .btn{padding:12px 18px}
+.prog{position:absolute;left:0;bottom:-1px;height:2px;background:var(--org);width:0}
+/* hero */
+.hero{padding:120px 0 0;border-top:0}
+.hero-g{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+.hero-g>*{min-width:0}
+.hero h1{font-size:clamp(46px,5.6vw,90px);margin-bottom:26px}
+.hero h1 em{font-style:normal;color:var(--org)}
+.hero h1 .ln{display:block;overflow:hidden}
+.hero h1 .ln>span{display:block;transform:translateY(105%);transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.loaded .hero h1 .ln>span{transform:none}
+.hero h1 .ln:nth-child(2)>span{transition-delay:.08s}
+.hero h1 .ln:nth-child(3)>span{transition-delay:.16s}
+.hero .lead{margin-bottom:34px}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap}
+.stage{background:var(--white);border:1px solid var(--line2);padding:14px}
+.stage-in{position:relative;aspect-ratio:16/10;overflow:hidden;background:#eee}
+.stage-in img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s,transform 6s linear;transform:scale(1.04)}
+.stage-in img.on{opacity:1;transform:scale(1)}
+.stage-in img.plan{object-fit:contain;background:#fff}
+.stage-tabs{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line2);margin-top:14px}
+.stage-tabs button{background:none;border:0;border-right:1px solid var(--line);padding:14px 12px 12px;text-align:left;cursor:pointer;position:relative;color:var(--muted)}
+.stage-tabs button:last-child{border-right:0}
+.stage-tabs button b{display:block;font:500 15px 'Inter Tight';color:var(--ink);margin-top:4px;text-transform:none;letter-spacing:0}
+.stage-tabs button i{position:absolute;left:0;top:-1px;height:2px;width:0;background:var(--org)}
+.stage-tabs button.on i{animation:fill var(--d,3.6s) linear forwards}
+.stage-tabs button.on{color:var(--org)}
+@keyframes fill{to{width:100%}}
+.stage-cap{display:flex;justify-content:space-between;gap:10px;margin-top:10px;color:var(--muted);flex-wrap:wrap}
+.cells{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line2);margin-top:80px;background:var(--white)}
+.cell{padding:28px 26px 26px;border-right:1px solid var(--line2);min-width:0}
+.cell:last-child{border-right:0}
+.cell b{display:block;font:600 56px/1 'Inter Tight';letter-spacing:-.04em;margin-bottom:22px}
+.cell b small{font-size:.4em;letter-spacing:-.01em;margin-left:4px}
+.cell span{color:var(--muted)}
+/* room */
+.room{display:grid;grid-template-columns:1.3fr .7fr;gap:0;border:1px solid var(--line2);background:var(--white)}
+.room>*{min-width:0}
+.room-svg{padding:26px;border-right:1px solid var(--line2)}
+.room-svg svg{width:100%;height:auto;display:block}
+.callout{cursor:pointer}
+.callout circle.d{fill:var(--org);transition:r .2s}
+.callout text{font:500 12px 'JB';fill:#fff;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.callout:hover circle.d,.callout.on circle.d{r:15}
+.hl{opacity:0;transition:opacity .4s}
+.hl.on{opacity:1}
+.drw{stroke-dasharray:3000;stroke-dashoffset:3000;transition:stroke-dashoffset 2.6s cubic-bezier(.4,0,.2,1)}
+.room.in .drw{stroke-dashoffset:0}
+.rlist{list-style:none}
+.rlist li{display:grid;grid-template-columns:40px 1fr;gap:10px;padding:18px 24px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .2s}
+.rlist li:last-child{border-bottom:0}
+.rlist li span.n{color:var(--org)}
+.rlist li b{display:block;font-weight:600;margin-bottom:2px}
+.rlist li p{font-size:15px;color:var(--muted);max-height:0;overflow:hidden;transition:max-height .4s}
+.rlist li.on{background:#FFF4EE}
+.rlist li.on p{max-height:120px}
+/* levels */
+.lv{display:grid;grid-template-columns:1.15fr .85fr;gap:0;border:1px solid var(--line2);background:var(--white)}
+.lv>*{min-width:0}
+.lv-t{border-right:1px solid var(--line2)}
+.lv-top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 24px;border-bottom:1px solid var(--line2);flex-wrap:wrap}
+.lv-top label{display:flex;align-items:center;gap:12px}
+.lv-top input{width:120px;border:1px solid var(--line2);background:var(--paper);padding:10px 12px;font:500 18px 'JB';outline:none}
+.lv-top input:focus{border-color:var(--org)}
+.row{display:grid;grid-template-columns:52px 1fr 110px 130px;gap:14px;align-items:center;padding:16px 24px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .2s}
+.row:last-child{border-bottom:0}
+.row:hover{background:var(--paper)}
+.row.on{background:#FFF4EE}
+.row .n{font-family:'JB';color:var(--muted)}
+.row.on .n{color:var(--org)}
+.row b{font-weight:600}
+.row small{display:block;color:var(--muted);font-size:14px}
+.row .p{font-family:'JB';font-size:14px;text-align:right;color:var(--muted)}
+.row .s{font-family:'JB';font-size:15px;text-align:right;font-weight:600}
+.row .free{color:var(--org)}
+.row.sep{border-top:2px dashed var(--line2)}
+.lv-v{position:sticky;top:64px;align-self:start;padding:20px}
+.lv-img{position:relative;aspect-ratio:4/3;background:var(--paper);overflow:hidden}
+.lv-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s}
+.lv-img img.on{opacity:1}
+.lv-v h3{margin:18px 0 10px}
+.lv-v ul{list-style:none;font-size:15px}
+.lv-v li{padding:8px 0;border-top:1px solid var(--line);display:flex;gap:10px}
+.lv-v li:before{content:"→";color:var(--org)}
+.tot{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px;padding-top:16px;border-top:2px solid var(--ink)}
+.tot b{font:600 34px 'Inter Tight';letter-spacing:-.03em}
+/* real */
+.rtabs{display:flex;border:1px solid var(--line2);border-bottom:0;background:var(--white);overflow-x:auto}
+.rtabs button{flex:1;min-width:150px;background:none;border:0;border-right:1px solid var(--line2);padding:18px 20px;text-align:left;cursor:pointer;color:var(--muted);transition:background .2s,color .2s}
+.rtabs button:last-child{border-right:0}
+.rtabs button b{display:block;font:600 18px 'Inter Tight';color:var(--ink);text-transform:none;letter-spacing:-.01em;margin-top:4px}
+.rtabs button.on{background:var(--ink);color:#aaa}
+.rtabs button.on b{color:#fff}
+.pair{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line2);background:var(--white)}
+.pair>*{min-width:0}
+.pair figure{padding:14px;position:relative}
+.pair figure:first-child{border-right:1px solid var(--line2)}
+.pair .im{position:relative;aspect-ratio:4/3;overflow:hidden;background:#eee}
+.pair img{width:100%;height:100%;object-fit:cover;transition:opacity .4s}
+.pair figcaption{display:flex;justify-content:space-between;margin-top:12px;color:var(--muted)}
+.pair figcaption b{color:var(--ink);font-weight:500}
+.pmeta{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line2);border-top:0;background:var(--white)}
+.pmeta div{padding:16px 20px;border-right:1px solid var(--line2);min-width:0}
+.pmeta div:last-child{border-right:0}
+.pmeta b{display:block;font:600 22px 'Inter Tight';letter-spacing:-.02em;margin-top:4px}
+/* timeline */
+.tln{border:1px solid var(--line2);background:var(--white)}
+.tln-top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 24px;border-bottom:1px solid var(--line2);flex-wrap:wrap}
+.seg2{display:flex;border:1px solid var(--ink)}
+.seg2 button{background:none;border:0;padding:10px 16px;cursor:pointer}
+.seg2 button.on{background:var(--ink);color:#fff}
+.trow{display:grid;grid-template-columns:240px 1fr 130px;gap:20px;align-items:center;padding:14px 24px;border-bottom:1px solid var(--line)}
+.trow:last-child{border-bottom:0}
+.trow b{font-weight:600}
+.trow small{display:block;color:var(--muted);font-size:14px}
+.bar{position:relative;height:26px;background:repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px calc(100%/24))}
+.bar i{position:absolute;top:4px;bottom:4px;left:var(--l);width:0;background:var(--ink);transition:width 1s cubic-bezier(.2,.8,.2,1),left .6s}
+.bar i.o{background:var(--org)}
+.tln.in .bar i{width:var(--w)}
+.trow .d{font-family:'JB';font-size:14px;text-align:right}
+.tscale{display:grid;grid-template-columns:240px 1fr 130px;gap:20px;padding:10px 24px;border-top:1px solid var(--line2);color:var(--muted)}
+.tscale div{display:flex;justify-content:space-between}
+/* send */
+.send{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line2);background:var(--white);margin-bottom:24px}
+.send div{padding:26px 24px;border-right:1px solid var(--line2);min-width:0}
+.send div:last-child{border-right:0}
+.send .n{color:var(--org);margin-bottom:28px}
+.send h3{font-size:20px;margin-bottom:8px}
+.send p{font-size:15px;color:var(--muted)}
+.fm{display:grid;grid-template-columns:.8fr 1.2fr;border:1px solid var(--ink);background:var(--ink);color:#fff}
+.fm>*{min-width:0}
+.fm-l{padding:44px;border-right:1px solid #333}
+.fm-l h2{margin-bottom:18px}
+.fm-l .lead{color:#A5A59C}
+.fm-r{padding:44px}
+form .r2{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid #333}
+form .r2>*{min-width:0}
+.f{border-bottom:1px solid #333;padding:14px 0 10px}
+.r2 .f:first-child{border-right:1px solid #333;padding-right:16px}
+.r2 .f:last-child{padding-left:16px}
+.f label{display:block;color:#8E8E86;margin-bottom:4px}
+.f input,.f select{width:100%;background:transparent;border:0;color:#fff;font-size:18px;outline:none;padding:4px 0}
+.f select option{color:var(--ink)}
+.f input:focus{color:var(--org)}
+.agree{font-size:13px;color:#8E8E86;margin:18px 0 22px}
+.sent{display:none;padding:30px 0}
+.sent h3{font-size:30px;margin-bottom:10px}
+.sent p{color:#A5A59C}
+form.done{display:none}
+form.done+.sent{display:block}
+/* faq */
+.faq{border-top:1px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--line2)}
+.faq summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:60px 1fr 30px;gap:10px;padding:24px 0;font:500 22px/1.3 'Inter Tight';letter-spacing:-.01em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .mono{color:var(--org);padding-top:6px}
+.faq summary:after{content:"+";font:400 26px 'JB';color:var(--org);transition:transform .3s;text-align:right}
+.faq details[open] summary:after{transform:rotate(45deg)}
+.faq .a{overflow:hidden}
+.faq .a p{padding:0 30px 26px 70px;color:var(--muted);max-width:900px}
+footer{border-top:1px solid var(--line2);padding:36px 0 50px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+#gapsToggle{position:fixed;left:20px;bottom:20px;z-index:60;background:var(--white);border:1px solid var(--line2);padding:10px 14px;font-family:'JB';font-size:12px;cursor:pointer;transition:opacity .3s}
+body.at-top #gapsToggle{opacity:0;pointer-events:none}
+[data-r]{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s cubic-bezier(.2,.8,.2,1)}
+[data-r].in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}[data-r]{opacity:1;transform:none}.hero h1 .ln>span{transform:none}.drw{stroke-dashoffset:0}}
+@media (max-width:1100px){.nav{display:none}.lv,.room{grid-template-columns:1fr}.lv-t,.room-svg{border-right:0;border-bottom:1px solid var(--line2)}.lv-v{position:static}.send{grid-template-columns:1fr 1fr}.send div:nth-child(2){border-right:0}.send div:nth-child(-n+2){border-bottom:1px solid var(--line2)}}
+@media (max-width:820px){
+body{font-size:17px}
+.wrap{padding:0 16px}
+.pad{padding:76px 0}
+.head,.hero-g,.pair,.fm{grid-template-columns:1fr;gap:28px}
+.head{margin-bottom:32px}
+.top .wrap{height:58px;gap:12px}
+.logo span{display:none}
+.top .btn{margin-left:auto;padding:10px 12px;font-size:11px}
+.hero{padding-top:90px}
+.cells{grid-template-columns:1fr 1fr;margin-top:40px}
+.cell{padding:20px 16px}
+.cell:nth-child(2){border-right:0}
+.cell:nth-child(-n+2){border-bottom:1px solid var(--line2)}
+.cell b{font-size:38px;margin-bottom:12px}
+.cell span{font-size:14px}
+.stage-tabs button{padding:10px 6px;font-size:10px}
+.stage-tabs button b{font-size:12px}
+.room-svg{padding:10px}
+.rlist li{padding:14px 16px}
+.lv-top{padding:14px 16px}
+.row{grid-template-columns:34px 1fr 96px;padding:14px 16px;gap:10px}
+.row .p{display:none}
+.lv-v{padding:16px}
+.pair figure:first-child{border-right:0;border-bottom:1px solid var(--line2)}
+.pmeta{grid-template-columns:1fr 1fr}
+.pmeta div:nth-child(2){border-right:0}
+.pmeta div:nth-child(-n+2){border-bottom:1px solid var(--line2)}
+.trow,.tscale{grid-template-columns:1fr 90px;gap:10px;padding:12px 16px}
+.trow .bar{grid-column:1/-1;grid-row:2}
+.tscale>span:first-child{display:none}
+.tscale div{grid-column:1/-1}
+.tscale>span:last-child{display:none}
+.send{grid-template-columns:1fr}
+.send div{border-right:0!important;border-bottom:1px solid var(--line2)}
+.fm-l,.fm-r{padding:28px 20px}
+.fm-l{border-right:0;border-bottom:1px solid #333}
+form .r2{grid-template-columns:1fr}
+.r2 .f:first-child{border-right:0;padding-right:0}
+.r2 .f:last-child{padding-left:0}
+.faq summary{grid-template-columns:40px 1fr 24px;font-size:18px}
+.faq .a p{padding:0 0 22px 50px}
+}
+</style>
+</head>
+<body class="at-top">
+<header class="top"><div class="wrap">
+  <a class="logo" href="#"><img src="assets/img/logo.svg" alt="UNITRAMP"><span class="mono">Проектирование</span></a>
+  <nav class="nav mono"><a href="#room">Помещение</a><a href="#levels">Уровни и цены</a><a href="#real">Проект и реальность</a><a href="#time">Сроки</a><a href="#send">Что прислать</a></nav>
+  <a class="btn o" href="#send">Прислать план <i>→</i></a>
+</div><div class="prog" id="prog"></div></header>
+
+<section class="hero grid-bg">
+  <div class="wrap">
+    <div class="hero-g">
+      <div>
+        <div class="lbl mono"><b>UNITRAMP</b> / Проектная документация / 01–08</div>
+        <h1><span class="ln"><span>Проект парка,</span></span><span class="ln"><span>по которому</span></span><span class="ln"><span><em>строят</em></span></span></h1>
+        <p class="lead">Планировка, 3D и смета под ваше помещение с учётом высот, колонн и пожарных требований. Первые четыре уровня проработки бесплатно. Проект сразу привязан к оборудованию, которое мы сами производим и монтируем.</p>
+        <div class="hero-cta"><a class="btn o" href="#send">Прислать план помещения <i>→</i></a><a class="btn g" href="#levels">Уровни и цены</a></div>
+      </div>
+      <div class="stage crop"><span class="c1"></span><span class="c2"></span>
+        <div class="stage-in" id="stg">
+          <img src="assets/img/sk-room.jpg" alt="Помещение до работ" class="on">
+          <img src="assets/img/sk-p2.jpg" alt="Планировка" class="plan">
+          <img src="assets/img/sk-3d.jpg" alt="3D-проект">
+          <img src="assets/img/sk-real2.jpg" alt="Открытый парк">
+        </div>
+        <div class="stage-tabs mono" id="stgT">
+          <button class="on"><i></i>01<b>Помещение</b></button>
+          <button><i></i>02<b>Планировка</b></button>
+          <button><i></i>03<b>3D</b></button>
+          <button><i></i>04<b>Открытие</b></button>
+        </div>
+        <div class="stage-cap mono"><span>«Сказка», Махачкала · 750 м² · 2024</span><span>Проектная визуализация и фото объекта</span></div>
+      </div>
+    </div>
+    <div class="cells" data-r>
+      <div class="cell"><b data-c="4">0</b><span>уровня проработки бесплатно при любой площади</span></div>
+      <div class="cell"><b>3–5<small>дн</small></b><span>2D-планировка с оборудованием</span></div>
+      <div class="cell"><b>2–3<small>нед</small></b><span>3D-проект помещения</span></div>
+      <div class="cell"><b data-c="81">0</b><span>реализованный проект в 63 городах</span></div>
+    </div>
+  </div>
+  <div style="height:110px"></div>
+</section>
+
+<section id="room" class="pad">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="lbl mono"><b>01</b> / Помещение</div><h2>Что учитываем, прежде чем рисовать</h2></div>
+      <p class="lead">Красивая картинка, которую нельзя построить, стоит дороже, чем кажется. Поэтому проект начинается с ограничений помещения.</p>
+    </div>
+    <div class="room" id="roomBox" data-r>
+      <div class="room-svg">
+        <svg viewBox="0 0 760 480" aria-label="План помещения с выносками">
+          <defs><pattern id="g" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#EEEEE8"/></pattern></defs>
+          <rect width="760" height="480" fill="url(#g)"/>
+          <path class="drw" d="M40 40H720V440H460M380 440H40Z" fill="none" stroke="#0E0E0E" stroke-width="5"/>
+          <g fill="#0E0E0E"><rect x="226" y="146" width="14" height="14"/><rect x="226" y="306" width="14" height="14"/><rect x="506" y="146" width="14" height="14"/><rect x="506" y="306" width="14" height="14"/></g>
+          <g font-family="JB" font-size="11" fill="#6E6E66">
+            <path d="M40 22H720M40 16V28M720 16V28" stroke="#6E6E66"/><text x="380" y="16" text-anchor="middle">34 000</text>
+            <path d="M738 40V440M732 40H744M732 440H744" stroke="#6E6E66"/><text x="752" y="244" transform="rotate(90 752 244)" text-anchor="middle">20 000</text>
+          </g>
+          <g class="hl" data-h="1"><rect x="60" y="60" width="300" height="200" fill="#FF4F00" opacity=".12"/><text x="210" y="165" font-family="JB" font-size="12" fill="#FF4F00" text-anchor="middle">h = 7,2 м: батуты, ниндзя</text><rect x="400" y="60" width="300" height="120" fill="#0E0E0E" opacity=".06"/><text x="550" y="125" font-family="JB" font-size="12" fill="#6E6E66" text-anchor="middle">h = 3,4 м: лабиринт до 3 м</text></g>
+          <g class="hl" data-h="2"><circle cx="233" cy="153" r="26" fill="none" stroke="#FF4F00" stroke-width="2" stroke-dasharray="4 4"/><circle cx="233" cy="313" r="26" fill="none" stroke="#FF4F00" stroke-width="2" stroke-dasharray="4 4"/><circle cx="513" cy="153" r="26" fill="none" stroke="#FF4F00" stroke-width="2" stroke-dasharray="4 4"/><circle cx="513" cy="313" r="26" fill="none" stroke="#FF4F00" stroke-width="2" stroke-dasharray="4 4"/></g>
+          <g class="hl" data-h="3"><path d="M420 400V470M640 240H740" stroke="#FF4F00" stroke-width="4" marker-end="url(#ar)"/><path d="M120 300L420 400M560 200L640 240" stroke="#FF4F00" stroke-width="2" stroke-dasharray="8 6" fill="none"/><text x="560" y="230" font-family="JB" font-size="12" fill="#FF4F00">эвакуационный выход</text><text x="430" y="420" font-family="JB" font-size="12" fill="#FF4F00">вход / выход</text></g>
+          <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#FF4F00"/></marker></defs>
+          <g class="hl" data-h="4"><rect x="60" y="60" width="300" height="200" fill="none" stroke="#0E0E0E" stroke-width="2"/><rect x="60" y="280" width="140" height="140" fill="none" stroke="#0E0E0E" stroke-width="2"/><rect x="400" y="200" width="160" height="90" fill="none" stroke="#0E0E0E" stroke-width="2"/><g font-family="JB" font-size="11" fill="#0E0E0E"><text x="70" y="78">арена 30×20 м</text><text x="70" y="298">ниндзя</text><text x="410" y="218">интерактив</text></g><path d="M200 300H380" stroke="#0E0E0E" stroke-dasharray="4 4"/><text x="290" y="296" font-family="JB" font-size="10" fill="#6E6E66" text-anchor="middle">проход ≥ норма</text></g>
+          <g class="hl" data-h="5"><g fill="#FF4F00"><circle cx="60" cy="420" r="5"/><circle cx="360" cy="270" r="5"/><circle cx="560" cy="290" r="5"/><circle cx="700" cy="420" r="5"/><circle cx="700" cy="60" r="5"/></g><text x="580" y="310" font-family="JB" font-size="11" fill="#FF4F00">розетки под интерактив</text></g>
+          <g class="hl" data-h="6"><rect x="560" y="320" width="150" height="110" fill="#0E0E0E" opacity=".08"/><text x="635" y="370" font-family="JB" font-size="12" fill="#0E0E0E" text-anchor="middle">кафе</text><rect x="380" y="380" width="80" height="50" fill="#FF4F00" opacity=".18"/><text x="420" y="410" font-family="JB" font-size="11" fill="#0E0E0E" text-anchor="middle">касса</text></g>
+          <g class="callout" data-h="1"><circle class="d" cx="360" cy="60" r="12"/><text x="360" y="60">1</text></g>
+          <g class="callout" data-h="2"><circle class="d" cx="250" cy="130" r="12"/><text x="250" y="130">2</text></g>
+          <g class="callout" data-h="3"><circle class="d" cx="420" cy="455" r="12"/><text x="420" y="455">3</text></g>
+          <g class="callout" data-h="4"><circle class="d" cx="200" cy="280" r="12"/><text x="200" y="280">4</text></g>
+          <g class="callout" data-h="5"><circle class="d" cx="560" cy="290" r="12"/><text x="560" y="290">5</text></g>
+          <g class="callout" data-h="6"><circle class="d" cx="710" cy="320" r="12"/><text x="710" y="320">6</text></g>
+          <text x="40" y="472" font-family="JB" font-size="10" fill="#6E6E66">СХЕМА · размеры условные</text>
+        </svg>
+      </div>
+      <ul class="rlist" id="rlist">
+        <li data-h="1"><span class="n mono">01</span><div><b>Высоты помещения</b><p>От высоты зависит, где встанут батуты, ниндзя-трасса и лабиринт. 3D строим с учётом высот (уровень 05).</p></div></li>
+        <li data-h="2"><span class="n mono">02</span><div><b>Колонны и особенности</b><p>Колонны, ригели, перепады пола. Учитываем проблемы помещения уже на 3D, а не на монтаже.</p></div></li>
+        <li data-h="3"><span class="n mono">03</span><div><b>Пожарные требования и эвакуация</b><p>Эвакуационные пути и проходы закладываются на этапе зонирования с учётом помещения (уровень 03).</p></div></li>
+        <li data-h="4"><span class="n mono">04</span><div><b>Размеры оборудования</b><p>Размещаем реальное оборудование с его габаритами, а не условные квадраты (уровень 02).</p></div></li>
+        <li data-h="5"><span class="n mono">05</span><div><b>Розетки и подключения</b><p>Интерактивным аттракционам нужно питание. Расположение розеток прорабатываем в детальном проекте (уровень 08).</p></div></li>
+        <li data-h="6"><span class="n mono">06</span><div><b>Вход, касса, кафе</b><p>Входная зона и кухня проектируются вместе с аттракционами в едином стиле (уровень 07).</p></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="levels" class="pad">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="lbl mono"><b>02</b> / Уровни проработки</div><h2>Восемь уровней. Первые четыре бесплатно</h2></div>
+      <p class="lead">Выберите, насколько глубоко проработать проект. Цена считается от площади помещения.</p>
+    </div>
+    <div class="lv" data-r>
+      <div class="lv-t">
+        <div class="lv-top"><label class="mono" for="area">Площадь, м² <input id="area" value="500" inputmode="numeric"></label><span class="mono" style="color:var(--muted)">цена · стоимость</span></div>
+        <div id="rows"></div>
+      </div>
+      <div class="lv-v">
+        <div class="lv-img crop" id="lvImg"><span class="c1"></span><span class="c2"></span></div>
+        <div class="mono" style="color:var(--org);margin-top:18px" id="lvN"></div>
+        <h3 id="lvT" style="margin-top:6px"></h3>
+        <ul id="lvD"></ul>
+        <div class="tot"><span class="mono">Стоимость уровня</span><b id="lvS"></b></div>
+        <p class="mono" style="color:var(--muted);margin-top:10px">Примеры: проект «ТикиТаки» <span class="gap ok">цены по сайту «Степень проработки»</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="real" class="pad">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="lbl mono"><b>03</b> / Проект и реальность</div><h2>Строим то, что нарисовали</h2></div>
+      <p class="lead">Слева проектная визуализация, справа фото того же объекта после открытия. Объекты с unitramp.ru.</p>
+    </div>
+    <div class="rtabs mono" id="rtabs"></div>
+    <div class="pair">
+      <figure class="crop"><span class="c1"></span><span class="c2"></span><div class="im"><img id="pA" src="" alt=""></div><figcaption class="mono"><b>Проект</b><span>визуализация</span></figcaption></figure>
+      <figure><div class="im"><img id="pB" src="" alt=""></div><figcaption class="mono"><b>Реальность</b><span>фото объекта</span></figcaption></figure>
+    </div>
+    <div class="pmeta mono" id="pmeta"></div>
+  </div>
+</section>
+
+<section id="time" class="pad">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="lbl mono"><b>04</b> / Сроки</div><h2>От планировки до открытия</h2></div>
+      <p class="lead">Проект занимает недели, производство месяцы. Чем раньше готов проект, тем раньше встаёт дата открытия.</p>
+    </div>
+    <div class="tln" id="tln" data-r>
+      <div class="tln-top"><span class="mono" style="color:var(--muted)">Шкала в неделях</span><div class="seg2 mono" id="mt"><button class="on" data-m="0">Монтаж под ключ</button><button data-m="1">Шеф-монтаж</button></div></div>
+      <div id="trows"></div>
+      <div class="tscale mono"><span></span><div id="tsc"></div><span></span></div>
+    </div>
+    <p class="mono" style="color:var(--muted);margin-top:14px">Сроки по сайту UNITRAMP «Степень проработки проекта» <span class="gap ok">согласовать со сроками на страницах проектов</span></p>
+  </div>
+</section>
+
+<section id="send" class="pad">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="lbl mono"><b>05</b> / Старт</div><h2>Что прислать для проекта</h2></div>
+      <p class="lead">Для бесплатных уровней хватит плана и фото. Для 3D и детального проекта нужен замер, специалист приезжает на объект.</p>
+    </div>
+    <div class="send" data-r>
+      <div><div class="n mono">01</div><h3>План помещения</h3><p>PDF, DWG или фото поэтажного плана с размерами.</p></div>
+      <div><div class="n mono">02</div><h3>Высоты и колонны</h3><p>Высота до перекрытий и балок, шаг колонн, расположение входов.</p></div>
+      <div><div class="n mono">03</div><h3>Фото и видео</h3><p>Общие планы помещения с телефона, окна, двери, инженерные узлы.</p></div>
+      <div><div class="n mono">04</div><h3>Задача и бюджет</h3><p>Для кого парк, какие зоны хотите и в каком бюджете.</p></div>
+    </div>
+    <div class="fm" data-r>
+      <div class="fm-l"><div class="lbl mono" style="color:#8E8E86"><b>→</b> заявка</div><h2>Начнём с плана</h2><p class="lead">Вернёмся с бабл-схемой и зонированием. Это бесплатно. <span class="gap ok">срок ответа</span></p></div>
+      <div class="fm-r">
+        <form id="f" novalidate>
+          <div class="r2"><div class="f"><label class="mono" for="fn">Имя</label><input id="fn"></div><div class="f"><label class="mono" for="fp">Телефон</label><input id="fp" type="tel" placeholder="+7 (___) ___-__-__"></div></div>
+          <div class="r2"><div class="f"><label class="mono" for="fc">Город</label><input id="fc"></div><div class="f"><label class="mono" for="fa">Площадь, м²</label><input id="fa" inputmode="numeric"></div></div>
+          <div class="r2"><div class="f"><label class="mono" for="fh">Высота потолка, м</label><input id="fh" inputmode="decimal"></div><div class="f"><label class="mono" for="fl">Уровень проработки</label><select id="fl"></select></div></div>
+          <div class="f"><label class="mono" for="fu">Ссылка на план и фото</label><input id="fu" placeholder="Диск, облако, Telegram"></div>
+          <p class="agree">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+          <button class="btn o" type="submit">Отправить план <i>→</i></button>
+        </form>
+        <div class="sent"><h3>Получили</h3><p>Это прототип: данные никуда не отправлены. На рабочем сайте заявка уйдёт проектировщику.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" style="padding-top:0;border-top:0">
+  <div class="wrap">
+    <div class="head"><div><div class="lbl mono"><b>06</b> / Вопросы</div><h2>Частые вопросы</h2></div></div>
+    <div class="faq">
+      <details><summary><span class="mono">01</span>Почему первые уровни бесплатно?</summary><div class="a"><p>Бабл-схема и зонирование нужны, чтобы вы увидели, что помещается в ваше помещение, до любых решений о деньгах. Платные уровни начинаются с 3D.</p></div></details>
+      <details><summary><span class="mono">02</span>Учитываете пожарные требования?</summary><div class="a"><p>Да, на уровне зонирования с учётом помещения: пожарные требования, эвакуационные пути и проходы.</p></div></details>
+      <details><summary><span class="mono">03</span>Засчитывается ли стоимость проекта в оборудование?</summary><div class="a"><p><span class="gap">условия зачёта стоимости проекта при заказе оборудования</span></p></div></details>
+      <details><summary><span class="mono">04</span>Можно заказать только проект?</summary><div class="a"><p><span class="gap">делаете ли проект без последующей поставки оборудования</span></p></div></details>
+      <details><summary><span class="mono">05</span>Сколько правок входит?</summary><div class="a"><p><span class="gap">количество итераций на каждом уровне</span></p></div></details>
+      <details><summary><span class="mono">06</span>Что будет после проекта?</summary><div class="a"><p>Смета и договор (по 2–3 дня), производство 3–4 месяца, доставка 7–10 дней и монтаж. Проект, производство и монтаж делает одна компания.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap mono"><span>© UNITRAMP, с 2014 года</span><span>Объекты и визуализации: unitramp.ru</span></div></footer>
+<button id="gapsToggle">Скрыть пробелы в данных</button>
+
+<script>
+var $=function(s,c){return(c||document).querySelector(s)},$$=function(s,c){return[].slice.call((c||document).querySelectorAll(s))};
+/* hero stages */
+var si=0,simgs=$$('#stg img'),stabs=$$('#stgT button'),st=null,DUR=3600;
+function stage(i,user){si=i;simgs.forEach(function(x,k){x.classList.toggle('on',k==i)});stabs.forEach(function(b,k){b.classList.remove('on');void b.offsetWidth;b.classList.toggle('on',k==i)});clearTimeout(st);if(!user)st=setTimeout(function(){stage((si+1)%4)},DUR);else{stabs[i].querySelector('i').style.animation='none';stabs[i].querySelector('i').style.width='100%'}}
+stabs.forEach(function(b,k){b.addEventListener('click',function(){stabs.forEach(function(x){x.querySelector('i').style.cssText=''});stage(k,true)})});
+
+/* room */
+function hl(n){$$('.hl').forEach(function(g){g.classList.toggle('on',g.dataset.h==n)});$$('.callout').forEach(function(g){g.classList.toggle('on',g.dataset.h==n)});$$('#rlist li').forEach(function(l){l.classList.toggle('on',l.dataset.h==n)})}
+$$('.callout').forEach(function(g){g.addEventListener('click',function(){hl(g.dataset.h)})});
+$$('#rlist li').forEach(function(l){l.addEventListener('click',function(){hl(l.dataset.h)})});
+hl('1');
+
+/* levels */
+var LV=[
+ {n:'Бабл-схема',p:0,d:['Бабл-схема основных функциональных зон','Распределение направлений активности','Взаимное расположение зон']},
+ {n:'Зонирование с учётом оборудования',p:0,d:['Размещение оборудования на плане','Учёт размеров каждого элемента','Уточнение границ зон']},
+ {n:'Зонирование с учётом помещения',p:0,d:['Особенности и ограничения помещения','Пожарные требования','Эвакуационные пути и проходы']},
+ {n:'Концепция и визуальный стиль',p:0,d:['Тематика и характер пространства','Цветовая палитра и ориентиры','Концепт-лист с привязкой к зонам']},
+ {n:'3D с учётом высот и ограничений',p:50,d:['Пространство в 3D','Высоты помещения','Проблемы и особенности помещения']},
+ {n:'3D в цвете и стилистике',p:200,d:['Проработка выбранной тематики','Цветовое решение','Единая дизайн-стилистика']},
+ {n:'3D всех зон',p:400,d:['3D-проработка всех зон','Кухня и входная зона','Общий вид в едином стиле']},
+ {n:'Детальный проект и фирменный стиль',p:3500,d:['Розетки и детальная проработка декораций','Проработка и создание дизайна','Фирменный стиль']}
+];
+var cur=0,lvImg=$('#lvImg');
+LV.forEach(function(l,i){var im=document.createElement('img');im.src='assets/img/lv'+(i+1)+'.jpg';im.alt=l.n;im.loading='lazy';lvImg.appendChild(im)});
+function fmt(n){return n.toLocaleString('ru-RU')+' ₽'}
+function area(){return +$('#area').value.replace(/\D/g,'')||0}
+function rows(){var a=area();$('#rows').innerHTML=LV.map(function(l,i){return'<div class="row'+(i==cur?' on':'')+(i==4?' sep':'')+'" data-i="'+i+'"><span class="n">0'+(i+1)+'</span><div><b>'+l.n+'</b><small>'+l.d[0]+'</small></div><span class="p">'+(l.p?l.p.toLocaleString('ru-RU')+' ₽/м²':'—')+'</span><span class="s'+(l.p?'':' free')+'">'+(l.p?fmt(a*l.p):'бесплатно')+'</span></div>'}).join('')}
+function lv(i){cur=i;var l=LV[i],a=area();$$('#lvImg img').forEach(function(x,k){x.classList.toggle('on',k==i)});$('#lvN').textContent='Уровень 0'+(i+1)+(l.p?' · '+l.p.toLocaleString('ru-RU')+' ₽/м²':' · бесплатно');$('#lvT').textContent=l.n;$('#lvD').innerHTML=l.d.map(function(t){return'<li>'+t+'</li>'}).join('');$('#lvS').textContent=l.p?fmt(a*l.p):'0 ₽';rows()}
+$('#rows').addEventListener('click',function(e){var r=e.target.closest('.row');if(r)lv(+r.dataset.i)});
+$('#area').addEventListener('input',function(){this.value=this.value.replace(/\D/g,'').slice(0,6);lv(cur)});
+lv(0);
+$('#fl').innerHTML=LV.map(function(l,i){return'<option>0'+(i+1)+' · '+l.n+'</option>'}).join('');
+
+/* real */
+var RP=[
+ {n:'«Сказка»',c:'Махачкала',a:'750 м²',y:'2024',t:'ДРЦ: лабиринт, ниндзя, скалодром',A:'sk-3d2',B:'sk-real2'},
+ {n:'ЦД «Сибирь»',c:'Тулун',a:'270 м²',y:'2023',t:'муниципальный центр досуга',A:'sb-3d',B:'sb-real'},
+ {n:'«Лимпопо»',c:'Сочи',a:'30 м²',y:'2023',t:'игровой лабиринт',A:'lp-3d',B:'lp-real'},
+ {n:'MONKEY',c:'Севастополь',a:'960 м²',y:'2023',t:'модернизация семейного парка',A:'mk-3d',B:'mk-real'}
+];
+$('#rtabs').innerHTML=RP.map(function(p,i){return'<button class="'+(i?'':'on')+'" data-i="'+i+'">'+p.c+'<b>'+p.n+'</b></button>'}).join('');
+function rp(i){var p=RP[i];$$('#rtabs button').forEach(function(b,k){b.classList.toggle('on',k==i)});['pA','pB'].forEach(function(id,k){var im=$('#'+id);im.style.opacity=0;setTimeout(function(){im.src='assets/img/'+(k?p.B:p.A)+'.jpg';im.alt=p.n+(k?', фото':', проект');im.style.opacity=1},200)});
+ $('#pmeta').innerHTML='<div>Город<b>'+p.c+'</b></div><div>Площадь<b>'+p.a+'</b></div><div>Год<b>'+p.y+'</b></div><div>Формат<b>'+p.t+'</b></div>'}
+$('#rtabs').addEventListener('click',function(e){var b=e.target.closest('button');if(b)rp(+b.dataset.i)});
+rp(0);
+
+/* timeline: weeks */
+var TL=[
+ {n:'2D-планировка',d:'3–5 дней',s:0,w:1},
+ {n:'3D-проект',d:'2–3 недели',s:1,w:3},
+ {n:'Смета',d:'2–3 дня',s:4,w:.5},
+ {n:'Договор',d:'2–3 дня',s:4.5,w:.5},
+ {n:'Производство',d:'3–4 месяца',s:5,w:16,o:1},
+ {n:'Доставка',d:'7–10 дней',s:21,w:1.5},
+ {n:'Монтаж под ключ',d:'30–40 дней',s:22.5,w:5.5,o:1,alt:{n:'Шеф-монтаж',d:'60–80 дней',w:11}}
+];
+var mode=0,TOT=34;
+function tl(){var h='';TL.forEach(function(r){var x=(mode&&r.alt)?r.alt:r,w=(mode&&r.alt)?r.alt.w:r.w;h+='<div class="trow"><div><b>'+x.n+'</b></div><div class="bar"><i class="'+(r.o?'o':'')+'" style="--l:'+(r.s/TOT*100)+'%;--w:'+(w/TOT*100)+'%"></i></div><span class="d">'+x.d+'</span></div>'});$('#trows').innerHTML=h;
+ var sc='';for(var k=0;k<=TOT;k+=6)sc+='<span>'+k+'</span>';$('#tsc').innerHTML=sc;
+ if($('#tln').classList.contains('in')){$$('#trows .bar i').forEach(function(i){i.style.width=i.style.getPropertyValue('--w')})}}
+$('#mt').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;mode=+b.dataset.m;$$('#mt button').forEach(function(x){x.classList.toggle('on',x==b)});tl()});
+tl();
+
+/* counters */
+function countTo(el){var t=+el.dataset.c,s=null;function f(ts){if(!s)s=ts;var p=Math.min((ts-s)/1400,1);el.textContent=Math.round(t*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)}
+/* faq */
+$$('.faq details').forEach(function(d){var s=d.querySelector('summary'),a=d.querySelector('.a');s.addEventListener('click',function(e){e.preventDefault();if(d.open){a.animate([{height:a.offsetHeight+'px'},{height:'0px'}],{duration:300,easing:'ease'}).onfinish=function(){d.open=false}}else{d.open=true;var h=a.offsetHeight;a.animate([{height:'0px'},{height:h+'px'}],{duration:300,easing:'ease'})}})});
+/* form */
+$('#fp').addEventListener('input',function(){var d=this.value.replace(/\D/g,'');if(d[0]=='8')d='7'+d.slice(1);if(d&&d[0]!='7')d='7'+d;d=d.slice(0,11);var o='+7';if(d.length>1)o+=' ('+d.slice(1,4);if(d.length>=4)o+=')';if(d.length>4)o+=' '+d.slice(4,7);if(d.length>7)o+='-'+d.slice(7,9);if(d.length>9)o+='-'+d.slice(9,11);this.value=d?o:''});
+$('#fa').addEventListener('input',function(){this.value=this.value.replace(/\D/g,'');$('#area').value=this.value||'500';lv(cur)});
+$('#f').addEventListener('submit',function(e){e.preventDefault();var ok=true;['#fn','#fp'].forEach(function(s){var i=$(s);var bad=s=='#fp'?i.value.replace(/\D/g,'').length<11:!i.value.trim();i.parentNode.style.borderColor=bad?'#FF4F00':'';if(bad)ok=false});if(ok)this.classList.add('done')});
+$('#gapsToggle').addEventListener('click',function(){document.body.classList.toggle('clean');this.textContent=document.body.classList.contains('clean')?'Показать пробелы в данных':'Скрыть пробелы в данных'});
+/* scroll */
+var prog=$('#prog');
+function onS(){var y=scrollY,h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(y/h*100)+'%';document.body.classList.toggle('at-top',y<innerHeight*.6)}
+addEventListener('scroll',onS,{passive:true});onS();
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var t=e.target;t.classList.add('in');$$('[data-c]',t).forEach(countTo);if(t.id=='tln')$$('#trows .bar i').forEach(function(i){i.style.width=i.style.getPropertyValue('--w')});io.unobserve(t)}})},{threshold:.15});
+$$('[data-r]').forEach(function(el){io.observe(el)});
+var started=false;function go(){if(started)return;started=true;document.body.classList.add('loaded');stage(0)}
+addEventListener('load',go);setTimeout(go,1500);
+</script>
+</body>
+</html>
